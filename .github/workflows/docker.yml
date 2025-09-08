@@ -1,0 +1,30 @@
+name: Publish images to Docker
+
+on:
+  push:
+    branches: [ "main" ]
+
+env:
+  REGISTRY: ghcr.io
+    
+jobs:
+  build-and-push-image:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        service: [steamcmd]
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build image
+        run: docker build -t ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ matrix.service }}:latest ./${{ matrix.service }}
+
+      - name: Push image
+        run: docker push ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ matrix.service }}:latest
