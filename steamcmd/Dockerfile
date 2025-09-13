@@ -21,5 +21,7 @@ USER steam
 RUN mkdir steamcmd && \
     tar -xzf steamcmd_linux.tar.gz -C /home/steam/steamcmd && \
     rm steamcmd_linux.tar.gz
- 
+
 WORKDIR /home/steam/steamcmd
+
+ENTRYPOINT ["./steamcmd.sh"]
