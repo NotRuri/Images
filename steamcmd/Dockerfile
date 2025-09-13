@@ -3,7 +3,7 @@ FROM debian:bookworm-slim
 LABEL version="1.0" \
       description="Base container for SteamCMD" \
       author="Ruri" \
-      maintainer="github.com/Ruewii"
+      maintainer="github.com/NotRuri"
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends lib32gcc-s1 ca-certificates
