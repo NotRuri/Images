@@ -24,4 +24,6 @@ RUN mkdir steamcmd && \
 
 WORKDIR /home/steam/steamcmd
 
+RUN ./steamcmd.sh +quit
+
 ENTRYPOINT ["./steamcmd.sh"]
