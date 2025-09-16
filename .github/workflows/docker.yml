@@ -6,13 +6,15 @@ on:
 
 env:
   REGISTRY: ghcr.io
-    
+
 jobs:
   build-and-push-image:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        service: [steamcmd]
+        service:
+          - debian-base
+          - steamcmd
     steps:
       - uses: actions/checkout@v5
 
@@ -25,9 +27,9 @@ jobs:
 
       - name: Set Owner
         run: echo "OWNER_LC=$(echo '${{ github.repository_owner }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
-  
+
       - name: Build image
         run: docker build -t ${{ env.REGISTRY }}/$OWNER_LC/${{ matrix.service }}:latest ./${{ matrix.service }}
-  
+
       - name: Push image
         run: docker push ${{ env.REGISTRY }}/$OWNER_LC/${{ matrix.service }}:latest
